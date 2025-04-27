@@ -1,0 +1,41 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  customerId String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  phone      String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  bikes      Bike[]
+}
+
+model Bike {
+  bikeId     String          @id @default(uuid())
+  brand      String
+  model      String
+  year       Int
+  customerId String
+  customer   Customer        @relation(fields: [customerId], references: [customerId])
+  services   ServiceRecord[]
+}
+
+model ServiceRecord {
+  serviceId      String    @id @default(uuid())
+  bikeId         String
+  serviceDate    DateTime
+  completionDate DateTime?
+  description    String
+  status         String
+  bike           Bike      @relation(fields: [bikeId], references: [bikeId])
+}
