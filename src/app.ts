@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import { customerRoutes } from "./module/Customer/customer.routes";
+import { bikeRoutes } from "./module/Bike/bike.route";
 
 const app: Application = express();
 app.use(express.json());
@@ -13,5 +14,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/customers", customerRoutes);
+app.use("/api/bikes", bikeRoutes);
 
 export default app;
