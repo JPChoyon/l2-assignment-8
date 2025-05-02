@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { bikeService } from "./bike.service";
-import { get } from "http";
 
 const createBike = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -14,7 +13,7 @@ const createBike = async (req: Request, res: Response): Promise<void> => {
   } catch (error: any) {
     res.status(500).send({
       success: false,
-      message: "Internal server error",
+      message: error.message || "Internal server error",
       error: error.message,
     });
   }
